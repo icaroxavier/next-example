@@ -39,4 +39,15 @@ export const GlobalStyles = createGlobalStyle`
     width: 100%;
     overflow-y: auto;
   }
+
+  #global-spinner.ant-spin-nested-loading {
+    .ant-spin{
+      max-height: 100vh;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+
 `;

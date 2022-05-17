@@ -1,4 +1,6 @@
 import {
+  CLEAR_MESSAGE,
+  SEND_MESSAGE,
   START_LOADING_GLOBAL,
   START_LOADING_LOCAL,
   START_REDIRECTING,
@@ -9,7 +11,12 @@ import {
 const initialState = {
   loadingLocal: false,
   loadingGlobal: false,
-  redirectTo: null
+  redirectTo: null,
+  messageObject: {
+    title: null,
+    message: null,
+    type: null
+  }
 }
 
 export default function utilsReducer(state = initialState, action){
@@ -26,6 +33,16 @@ export default function utilsReducer(state = initialState, action){
       return {...state, loadingLocal: false}
     case STOP_LOADING_GLOBAL:
       return {...state, loadingGlobal: false}
+    case SEND_MESSAGE:
+      return {
+        ...state,
+        messageObject: {
+          title: action.params.title,
+          message: action.params.message,
+          type: action.params.type
+        }}
+    case CLEAR_MESSAGE:
+      return {...state, messageObject: initialState.messageObject}
     default:
       return state;
   }

@@ -1,4 +1,6 @@
 import {
+  CLEAR_MESSAGE,
+  SEND_MESSAGE,
   START_LOADING_GLOBAL,
   START_LOADING_LOCAL,
   START_REDIRECTING,
@@ -37,5 +39,18 @@ export function startRedirecting(route){
 export function stopRedirecting(){
   return {
     type: STOP_REDIRECTING
+  }
+}
+
+export function sendMessage(params){
+  return {
+    type: SEND_MESSAGE,
+    params
+  }
+}
+
+export function clearMessage(){
+  return {
+    type: CLEAR_MESSAGE
   }
 }

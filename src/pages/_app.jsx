@@ -8,27 +8,56 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import Router, {useRouter} from "next/router";
-import {useEffect} from "react";
-import {stopRedirecting} from "../redux/utils/actions";
+import {useEffect, useState} from "react";
+import {clearMessage, stopRedirecting} from "../redux/utils/actions";
+import { Spin, notification } from 'antd';
+import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { loadingGlobal, redirectTo } = useAppSelector(store => store.utils)
+  const { loadingGlobal, redirectTo, messageObject } = useAppSelector(store => store.utils)
+  const [loadingRouteState, setLoadingRouteState] = useState(false);
 
+  useEffect(() => {
+    Router.onRouteChangeStart = () => {
+      setLoadingRouteState(true);
+    };
+
+    Router.onRouteChangeComplete = () => {
+      setLoadingRouteState(false);
+    };
+
+    Router.onRouteChangeError = () => {
+      setLoadingRouteState(false);
+    };
+  }, []);
 
   useEffect(() => {
     if(redirectTo){
       dispatch(stopRedirecting())
       router.push(redirectTo).then(r => false)
     }
-  }, [dispatch, redirectTo, router])
+  }, [redirectTo])
+
+  useEffect(() => {
+    if(messageObject.message){
+      dispatch(clearMessage())
+      notification[messageObject.type || 'warning']({
+        message: messageObject.title || '',
+        description: messageObject.message
+      })
+    }
+
+  }, [messageObject])
 
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-        <GlobalStyles />
+        <Spin id="global-spinner" spinning={loadingRouteState || loadingGlobal}>
+          <Component {...pageProps} />
+          <GlobalStyles />
+        </Spin>
       </ThemeProvider>
     </Provider>
   );
