@@ -1,7 +1,9 @@
+import '../styles/global.css'
+import 'antd/dist/antd.css'
+
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
 import { GlobalStyles } from '../styles/global-styles';
-import 'antd/dist/antd.css'
 import {Provider} from 'react-redux';
 import store from '../redux/store'
 import withRedux from 'next-redux-wrapper'
@@ -11,7 +13,6 @@ import Router, {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {clearMessage, stopRedirecting} from "../redux/utils/actions";
 import { Spin, notification } from 'antd';
-import '../styles/global.css'
 
 function MyApp({ Component, pageProps }) {
   const dispatch = useAppDispatch()
