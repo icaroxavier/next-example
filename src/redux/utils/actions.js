@@ -1,5 +1,11 @@
 import {
   CLEAR_MESSAGE,
+  GET_CEP_INFO_REQUEST,
+  GET_CEP_INFO_SUCCESS,
+  GET_CIDADES_REQUEST,
+  GET_CIDADES_SUCCESS,
+  GET_ESTADOS_REQUEST,
+  GET_ESTADOS_SUCCESS,
   SEND_MESSAGE,
   START_LOADING_GLOBAL,
   START_LOADING_LOCAL,
@@ -49,8 +55,54 @@ export function sendMessage(params){
   }
 }
 
+export function sendErrorMessage(message){
+  return {
+    type: SEND_MESSAGE,
+    params: { type: "error", title: "Erro", message }
+  }
+}
+
 export function clearMessage(){
   return {
     type: CLEAR_MESSAGE
+  }
+}
+
+export function getCepInfoRequest(params){
+  return {
+    type: GET_CEP_INFO_REQUEST,
+    params
+  }
+}
+
+export function getCepInfoSuccess(data){
+  return {
+    type: GET_CEP_INFO_SUCCESS,
+    data
+  }
+}
+
+export function getEstadosRequest(params){
+  return {
+    type: GET_ESTADOS_REQUEST,
+    params
+  }
+}
+export function getEstadosSuccess(data){
+  return {
+    type: GET_ESTADOS_SUCCESS,
+    data
+  }
+}
+export function getCidadesRequest(params){
+  return {
+    type: GET_CIDADES_REQUEST,
+    params
+  }
+}
+export function getCidadesSuccess(data){
+  return {
+    type: GET_CIDADES_SUCCESS,
+    data
   }
 }

@@ -1,10 +1,7 @@
 import axios from 'axios';
 
-export function buscaCep(params){
-     return axios({
-          method: 'get',
-          url: `https://viacep.com.br/ws/${params}/json/`
-     });
+export function getCepInfo(params){
+     return axios.get(`https://viacep.com.br/ws/${params}/json/`);
 }
 
 export function getEstados(){

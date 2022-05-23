@@ -5,7 +5,13 @@ import {
   START_LOADING_LOCAL,
   START_REDIRECTING,
   STOP_LOADING_GLOBAL, STOP_LOADING_LOCAL,
-  STOP_REDIRECTING
+  STOP_REDIRECTING,
+  GET_CEP_INFO_REQUEST,
+  GET_CEP_INFO_SUCCESS,
+  GET_CIDADES_REQUEST,
+  GET_CIDADES_SUCCESS,
+  GET_ESTADOS_REQUEST,
+  GET_ESTADOS_SUCCESS
 } from "../actionTypes";
 
 const initialState = {
@@ -16,7 +22,10 @@ const initialState = {
     title: null,
     message: null,
     type: null
-  }
+  },
+  estados: [],
+  cidades: [],
+  cepInfo: null
 }
 
 export default function utilsReducer(state = initialState, action){
@@ -43,6 +52,18 @@ export default function utilsReducer(state = initialState, action){
         }}
     case CLEAR_MESSAGE:
       return {...state, messageObject: initialState.messageObject}
+    case GET_ESTADOS_REQUEST:
+      return {...state, estados: []}
+    case GET_ESTADOS_SUCCESS:
+      return {...state, estados: action.data}
+    case GET_CIDADES_REQUEST:
+      return {...state, cidades: []}
+    case GET_CIDADES_SUCCESS:
+      return {...state, cidades: action.data}
+    case GET_CEP_INFO_REQUEST:
+      return {...state, cepInfo: null}
+    case GET_CEP_INFO_SUCCESS:
+      return {...state, cepInfo: action.data}
     default:
       return state;
   }
