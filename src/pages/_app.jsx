@@ -13,6 +13,7 @@ import Router, {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {clearMessage, stopRedirecting} from "../redux/utils/actions";
 import { Spin, notification } from 'antd';
+import { AuthProvider } from '../contexts/AuthContext';
 
 function MyApp({ Component, pageProps }) {
   const dispatch = useAppDispatch()
@@ -53,14 +54,16 @@ function MyApp({ Component, pageProps }) {
   }, [messageObject])
 
   return (
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <Spin id="global-spinner" spinning={loadingRouteState || loadingGlobal}>
-          <Component {...pageProps} />
-          <GlobalStyles />
-        </Spin>
-      </ThemeProvider>
-    </Provider>
+    <AuthProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Spin id="global-spinner" spinning={loadingRouteState || loadingGlobal}>
+            <Component {...pageProps} />
+            <GlobalStyles />
+          </Spin>
+        </ThemeProvider>
+      </Provider>
+    </AuthProvider>
   );
 }
 
