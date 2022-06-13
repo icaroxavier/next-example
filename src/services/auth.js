@@ -7,11 +7,13 @@ export async function signInRequest(params){
   await delay()
 
   return {
-    token: uuid(),
-    user: {
-      name: "Ícaro Xavier",
-      email: "icarogabriel999@gmail.com",
-      avatar_url: "https://github.com/XaloDev.png"
+    data: {
+      token: uuid(),
+      user: {
+        name: "Ícaro Xavier",
+        email: "icarogabriel999@gmail.com",
+        avatar_url: "https://github.com/XaloDev.png"
+      }
     }
   }
 }
@@ -20,10 +22,12 @@ export async function getMeRequest(params){
   await delay()
 
   return {
-    user: {
-      name: "Ícaro Xavier",
-      email: "icarogabriel999@gmail.com",
-      avatar_url: "https://github.com/XaloDev.png"
+    data: {
+      user: {
+        name: "Ícaro Xavier",
+        email: "icarogabriel999@gmail.com",
+        avatar_url: "https://github.com/XaloDev.png"
+      }
     }
   }
 }

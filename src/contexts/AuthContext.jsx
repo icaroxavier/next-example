@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from 'react'
 import { getMeRequest, signInRequest } from '../services/auth';
-import { setCookie, parseCookies } from 'nookies'
+import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from 'next/router'
 import api from '../services/api';
 
@@ -17,27 +17,42 @@ export function AuthProvider({ children }){
 
     if (token) {
       getMeRequest().then(response => {
-        setUser(response.user)
+        setUser(response.data?.user)
+      }).catch(error => {
+        console.log(error)
       })
     }
   }, [])
 
   async function signIn(params) {
-    const { token, user } = await signInRequest({
+    const response = await signInRequest({
       username: params.username,
       password: params.password
     })
 
-    setCookie(null, 'nextexample.token', token, {
-      maxAge: 60 * 60 * 2, // 2 hours
+    const { token, user } = response.data
+
+    if(token){
+      setCookie(null, 'nextexample.token', token, {
+        maxAge: 60 * 60 * 2, // 2 hours
+        path: '/'
+      })
+
+      api.defaults.headers['Authorization'] = `Bearer ${token}`
+
+      user && setUser(user)
+
+      Router.push('/dashboard')
+    }
+  }
+
+  function logout(){
+    destroyCookie(null, 'nextexample.token', {
       path: '/'
     })
-
-    api.defaults.headers['Authorization'] = `Bearer ${token}`
-
-    setUser(user)
-
-    Router.push('/dashboard')
+    api.defaults.headers['Authorization'] = ``
+    setUser(null)
+    Router.push('/login')
   }
 
   return (
