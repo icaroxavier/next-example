@@ -25,7 +25,7 @@ function* getCidades({ params }){
   try {
     yield put(startLoadingLocal())
 
-    const response = yield call(Utils.getCidades, params)
+    const response = yield call(Utils.getMunicipios, params)
 
     yield put(getCidadesSuccess(response.data))
   } catch (error) {

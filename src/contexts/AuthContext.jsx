@@ -17,16 +17,18 @@ export function AuthProvider({ children }){
 
     if (token) {
       getMeRequest().then(response => {
-        setUser(response.user)
+        setUser(response.data?.user)
       })
     }
   }, [])
 
   async function signIn(params) {
-    const { token, user } = await signInRequest({
+    const response = await signInRequest({
       username: params.username,
       password: params.password
     })
+
+    const { token, user } = response.data
 
     setCookie(null, 'nextexample.token', token, {
       maxAge: 60 * 60 * 2, // 2 hours

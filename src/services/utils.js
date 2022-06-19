@@ -8,6 +8,9 @@ export function getEstados(){
      return axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
 }
 
-export function getCidades(){
-     return axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/distritos')
+export function getMunicipios(params){
+  return params?.uf ?
+  axios.get(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${params.uf}/municipios`)
+  :
+  axios.get('https://servicodados.ibge.gov.br/api/v1/localidades/municipios')
 }
