@@ -22,6 +22,10 @@ export const GlobalStyles = createGlobalStyle`
     margin: ${({ theme }) => theme.spacings.large} 0;
   }
 
+  h2 {
+    color: #000000bb;
+  }
+
   p {
     margin: ${({ theme }) => theme.spacings.medium} 0;
   }

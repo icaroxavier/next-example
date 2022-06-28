@@ -11,7 +11,10 @@ import {
   GET_CIDADES_REQUEST,
   GET_CIDADES_SUCCESS,
   GET_ESTADOS_REQUEST,
-  GET_ESTADOS_SUCCESS
+  GET_ESTADOS_SUCCESS,
+  DELETE_CEP_INFO,
+  GET_MUNICIPIOS_REQUEST,
+  GET_MUNICIPIOS_SUCCESS
 } from "../actionTypes";
 
 const initialState = {
@@ -25,6 +28,7 @@ const initialState = {
   },
   estados: [],
   cidades: [],
+  municipios: [],
   cepInfo: null
 }
 
@@ -64,6 +68,12 @@ export default function utilsReducer(state = initialState, action){
       return {...state, cepInfo: null}
     case GET_CEP_INFO_SUCCESS:
       return {...state, cepInfo: action.data}
+    case DELETE_CEP_INFO:
+      return {...state, cepInfo: null}
+    case GET_MUNICIPIOS_REQUEST:
+      return {...state, municipios: []}
+    case GET_MUNICIPIOS_SUCCESS:
+      return {...state, municipios: action.data}
     default:
       return state;
   }

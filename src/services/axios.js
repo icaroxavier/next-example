@@ -3,8 +3,8 @@ import { parseCookies } from "nookies";
 
 export function getAPIClient(ctx) {
 
-  const baseURL = process.env.BACKEND_URL;
-  const { 'nextexample.token': token } = parseCookies(ctx)
+  const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL;
+  const { 'next-example.token': token } = parseCookies(ctx)
 
   const api = axios.create({
     baseURL,
@@ -19,7 +19,7 @@ export function getAPIClient(ctx) {
   }
 
   // api.interceptors.request.use(function(config) {
-  //   const { 'nextexample.token': token } = parseCookies()
+  //   const { 'next-example.token': token } = parseCookies()
 
   //   if (token) {
   //     config.headers.Authorization = `Bearer ${token}`;

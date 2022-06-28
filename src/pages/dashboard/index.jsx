@@ -1,19 +1,23 @@
 import { useContext } from "react"
 import { AuthContext } from "../../contexts/AuthContext"
 import nookies from 'nookies'
+import DashboardScreenComponent from "../../components/DashboardScreen"
+import Head from "next/head"
 
 
 export default function DashboardPage(){
-
-  const { isAuthenticated } = useContext(AuthContext)
-
   return (
-    <>{ isAuthenticated ? 'You are authenticated!' : 'You are NOT authenticated :c'}</>
+    <>
+      <Head>
+        <title>NE - Dashboard</title>
+      </Head>
+      <DashboardScreenComponent/>
+    </>
   )
 }
 
 export const getServerSideProps = async (ctx) => {
-  const { ['nextexample.token']: token} = nookies.get(ctx)
+  const { ['next-example.token']: token} = nookies.get(ctx)
 
   if (!token) {
     return {

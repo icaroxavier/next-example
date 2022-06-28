@@ -1,5 +1,6 @@
 import {
   CLEAR_MESSAGE,
+  DELETE_CEP_INFO,
   GET_CEP_INFO_REQUEST,
   GET_CEP_INFO_SUCCESS,
   GET_CIDADES_REQUEST,
@@ -11,7 +12,10 @@ import {
   START_LOADING_LOCAL,
   START_REDIRECTING,
   STOP_LOADING_GLOBAL,
-  STOP_LOADING_LOCAL, STOP_REDIRECTING
+  STOP_LOADING_LOCAL,
+  STOP_REDIRECTING,
+  GET_MUNICIPIOS_REQUEST,
+  GET_MUNICIPIOS_SUCCESS
 } from "../actionTypes";
 
 export function startLoadingLocal(){
@@ -82,6 +86,12 @@ export function getCepInfoSuccess(data){
   }
 }
 
+export function deleteCepInfo(){{
+  return {
+    type: DELETE_CEP_INFO
+  }
+}}
+
 export function getEstadosRequest(params){
   return {
     type: GET_ESTADOS_REQUEST,
@@ -103,6 +113,19 @@ export function getCidadesRequest(params){
 export function getCidadesSuccess(data){
   return {
     type: GET_CIDADES_SUCCESS,
+    data
+  }
+}
+
+export function getMunicipiosRequest(params){
+  return {
+    type: GET_MUNICIPIOS_REQUEST,
+    params
+  }
+}
+export function getMunicipiosSuccess(data){
+  return {
+    type: GET_MUNICIPIOS_SUCCESS,
     data
   }
 }

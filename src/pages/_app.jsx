@@ -12,8 +12,10 @@ import {useAppDispatch, useAppSelector} from "../redux/hooks";
 import Router, {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {clearMessage, stopRedirecting} from "../redux/utils/actions";
-import { Spin, notification } from 'antd';
+import { Spin, notification, ConfigProvider } from 'antd';
 import { AuthProvider } from '../contexts/AuthContext';
+import ptBR from 'antd/lib/locale/pt_BR';
+
 
 function MyApp({ Component, pageProps }) {
   const dispatch = useAppDispatch()
@@ -53,14 +55,17 @@ function MyApp({ Component, pageProps }) {
 
   }, [messageObject])
 
+
   return (
     <AuthProvider>
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <Spin id="global-spinner" spinning={loadingRouteState || loadingGlobal}>
-            <Component {...pageProps} />
-            <GlobalStyles />
-          </Spin>
+          <ConfigProvider locale={ptBR}>
+            <Spin id="global-spinner" spinning={loadingRouteState || loadingGlobal}>
+              <Component {...pageProps} />
+              <GlobalStyles />
+            </Spin>
+          </ConfigProvider>
         </ThemeProvider>
       </Provider>
     </AuthProvider>

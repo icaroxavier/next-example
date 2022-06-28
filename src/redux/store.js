@@ -8,7 +8,11 @@ import rootReducer from './root-reducer'
 
 const sagaMiddleware = createSagaMiddleware()
 
-const middleware = [...getDefaultMiddleware(), logger, sagaMiddleware]
+const middleware = [
+  ...getDefaultMiddleware(),
+  // logger,
+  sagaMiddleware
+]
 
 const preloadedState = {}
 

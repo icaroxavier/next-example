@@ -1,33 +1,19 @@
 import { v4 as uuid } from 'uuid'
+import api from './api'
+
+const baseURL = 'auth/'
 
 
 const delay = (amount = 750) => new Promise(resolve => setTimeout(resolve, amount))
 
 export async function signInRequest(params){
-  await delay()
-
-  return {
-    data: {
-      token: uuid(),
-      user: {
-        name: "Ícaro Xavier",
-        email: "icarogabriel999@gmail.com",
-        avatar_url: "https://github.com/XaloDev.png"
-      }
-    }
-  }
+  return await api.post(baseURL + 'login', params)
 }
 
-export async function getMeRequest(params){
-  await delay()
+export async function getMeRequest(){
+  return await api.get(baseURL + 'getMe')
+}
 
-  return {
-    data: {
-      user: {
-        name: "Ícaro Xavier",
-        email: "icarogabriel999@gmail.com",
-        avatar_url: "https://github.com/XaloDev.png"
-      }
-    }
-  }
+export async function registerRequest(params){
+  return await api.post(baseURL + 'register', params)
 }

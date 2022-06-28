@@ -2,15 +2,15 @@ import { AuthScreenComponent } from "../components/AuthScreen";
 import nookies from 'nookies'
 import Head from "next/head";
 
-export default function LoginPage() {
+export default function RegistrarPage() {
   return (
     <>
       <Head>
-        <title>NE - Login</title>
+        <title>NE - Registrar</title>
       </Head>
-      <AuthScreenComponent isLoginScreen/>
+      <AuthScreenComponent isLoginScreen={false}/>
     </>
-  );
+  )
 }
 
 

@@ -1,54 +1,109 @@
 import { createContext, useState, useEffect } from 'react'
-import { getMeRequest, signInRequest } from '../services/auth';
+import { getMeRequest, registerRequest, signInRequest } from '../services/auth';
 import { setCookie, parseCookies, destroyCookie } from 'nookies'
 import Router from 'next/router'
 import api from '../services/api';
+import { useAppDispatch } from '../redux/hooks';
+import { sendErrorMessage, sendMessage, startLoadingGlobal, stopLoadingGlobal } from '../redux/utils/actions';
 
 
-export const AuthContext = createContext({})
+export const AuthContext = createContext()
 
-export function AuthProvider({ children }){
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-
+  const dispatch = useAppDispatch()
   const isAuthenticated = !!user;
 
   useEffect(() => {
-    const { 'nextexample.token': token } = parseCookies()
+    const { 'next-example.token': token } = parseCookies()
+
 
     if (token) {
       getMeRequest().then(response => {
-        setUser(response.data?.user)
+        setUser(response.data)
       }).catch(error => {
-        console.log(error)
+        if(error.response?.status !== 500){
+          dispatch(sendErrorMessage(error.response?.data?.message))
+        } else {
+          dispatch(sendErrorMessage("Erro ao recuperar as suas informações no nosso sistema, tente novamente mais tarde."))
+        }
+        logout()
       })
     }
   }, [])
 
-  async function signIn(params) {
-    const response = await signInRequest({
-      username: params.username,
-      password: params.password
-    })
+  async function register(params) {
+    try {
+      dispatch(startLoadingGlobal())
+      const response = await registerRequest(params)
 
-    const { token, user } = response.data
+      dispatch(sendMessage({ type: "success", title: "Parabéns", message: `Seja bem-vind${params.gender === "FEMALE" ? "a" : "o"} ${params.firstName} ${params.lastName}!`}))
 
-    if(token){
+      const { token, user } = response.data
 
-      setCookie(null, 'nextexample.token', token, {
-        maxAge: 60 * 60 * 2, // 2 hours
-        path: '/'
-      })
+      if(token){
+        setCookie(null, 'next-example.token', token, {
+          maxAge: 60 * 60 * 2, // 2 hours
+          path: '/'
+        })
 
-      api.defaults.headers['Authorization'] = `Bearer ${token}`
+        api.defaults.headers['Authorization'] = `Bearer ${token}`
+      }
 
       user && setUser(user)
 
-      Router.push('/dashboard')
+
+      token && Router.push('/dashboard')
+    } catch (error) {
+      if(error.response?.status !== 500){
+        dispatch(sendErrorMessage(error.response?.data?.message))
+      } else {
+        dispatch(sendErrorMessage("Erro ao cadastrar, caso persista, entre em contato com o suporte."))
+      }
+    } finally {
+      dispatch(stopLoadingGlobal())
     }
   }
 
+  async function signIn(params) {
+    try {
+      dispatch(startLoadingGlobal())
+
+      const response = await signInRequest({
+        username: params.username,
+        password: params.password
+      })
+
+      const { token, user } = response.data
+
+      if(token){
+        setCookie(null, 'next-example.token', token, {
+          maxAge: 60 * 60 * 2, // 2 hours
+          path: '/'
+        })
+
+        api.defaults.headers['Authorization'] = `Bearer ${token}`
+      }
+
+      user && setUser(user)
+
+      token && Router.push('/dashboard')
+    } catch (error) {
+      if(error.response?.status === 401){
+        dispatch(sendErrorMessage("Credenciais inválidas."))
+      } else if(error.response?.status !== 500) {
+        dispatch(sendErrorMessage(error.response?.data?.message))
+      } else {
+        dispatch(sendErrorMessage("Erro interno no servidor, entre em contato com o suporte."))
+      }
+    } finally {
+      dispatch(stopLoadingGlobal())
+    }
+
+  }
+
   function logout(){
-    destroyCookie(null, 'nextexample.token', {
+    destroyCookie(null, 'next-example.token', {
       path: '/'
     })
     api.defaults.headers['Authorization'] = ``
@@ -57,7 +112,7 @@ export function AuthProvider({ children }){
   }
 
   return (
-    <AuthContext.Provider value={{ user, isAuthenticated, signIn}}>
+    <AuthContext.Provider value={{ user, isAuthenticated, signIn, logout, register}}>
       {children}
     </AuthContext.Provider>
   )
