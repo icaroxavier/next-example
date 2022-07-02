@@ -1,4 +1,4 @@
-import { AppEnvelopeWrapper} from './styles';
+import { AppEnvelopeWrapper } from './styles';
 import { Layout, Button } from 'antd';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
@@ -18,10 +18,10 @@ export function AppEnvelope(props) {
     <AppEnvelopeWrapper>
       <Layout className='main-layout'>
         <Sider>
-          <div className='sider-logo-row'>
-
-            <Image width={50} height={50} src={'/assets/images/logo.png'} alt="Logo" onClick={() => router.push('/dashboard')}></Image>
-
+          <div className="topRow">
+            <Link href={'/dashboard'}>
+              <span>next-example</span>
+            </Link>
           </div>
           <div className='menu-column'>
             <Link href={'/dashboard'}>

@@ -7,13 +7,45 @@ const baseURL = 'auth/'
 const delay = (amount = 750) => new Promise(resolve => setTimeout(resolve, amount))
 
 export async function signInRequest(params){
-  return await api.post(baseURL + 'login', params)
+  await delay()
+  return {
+    data: {
+      token: uuid(),
+      user: {
+        firstName: "Ícaro",
+        lastName: "Gabriel",
+        gender: "MALE"
+      }
+    }
+  }
+  // return await api.post(baseURL + 'login', params)
 }
 
 export async function getMeRequest(){
-  return await api.get(baseURL + 'getMe')
+  await delay()
+  return {
+    data: {
+      user: {
+        firstName: "Ícaro",
+        lastName: "Gabriel",
+        gender: "MALE"
+      }
+    }
+  }
+  // return await api.get(baseURL + 'getMe')
 }
 
 export async function registerRequest(params){
-  return await api.post(baseURL + 'register', params)
+  await delay()
+  return {
+    data: {
+      token: uuid(),
+      user: {
+        firstName: "Ícaro",
+        lastName: "Gabriel",
+        gender: "MALE"
+      }
+    }
+  }
+  // return await api.post(baseURL + 'register', params)
 }

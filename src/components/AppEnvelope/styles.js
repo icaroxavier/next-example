@@ -21,6 +21,21 @@ export const AppEnvelopeWrapper = styled.div`
     aside {
       color: white;
       display: flex;
+      background-color: #f44;
+
+      .topRow{
+        height: 64px;
+        min-height: 64px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        span {
+          font-weight: 300;
+          font-size: 20px;
+          text-shadow: 2px 2px #025;
+          cursor: pointer;
+        }
+      }
 
       .menu-column {
         width: 100%;
@@ -73,7 +88,7 @@ export const AppEnvelopeWrapper = styled.div`
         }
 
         .logout-button {
-          margin-top: auto;
+          margin-top: 20px;
           margin-bottom: 20px;
           border-radius: 20px;
           color: white;
