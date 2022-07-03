@@ -25,11 +25,9 @@ export async function getMeRequest(){
   await delay()
   return {
     data: {
-      user: {
-        firstName: "Ícaro",
-        lastName: "Gabriel",
-        gender: "MALE"
-      }
+      firstName: "Ícaro",
+      lastName: "Gabriel",
+      gender: "MALE"
     }
   }
   // return await api.get(baseURL + 'getMe')

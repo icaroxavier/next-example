@@ -2,11 +2,10 @@ import { AppEnvelopeWrapper } from './styles';
 import { Layout, Button } from 'antd';
 import { useContext } from 'react';
 import { AuthContext } from '../../contexts/AuthContext';
-import Image from 'next/image';
 import Link from 'next/link'
-import {BiUser, BiHome} from "react-icons/bi";
 import { useRouter } from 'next/router';
 const { Header, Footer, Sider, Content } = Layout;
+import { HomeOutlined, UserOutlined } from '@ant-design/icons';
 
 
 export function AppEnvelope(props) {
@@ -26,13 +25,13 @@ export function AppEnvelope(props) {
           <div className='menu-column'>
             <Link href={'/dashboard'}>
               <div className="menu-button">
-                <BiHome size={24}/>
+                <HomeOutlined style={{fontSize: 24}}/>
                 <span> Início</span>
               </div>
             </Link>
             <Link href={'/dashboard/perfil'}>
               <div className="menu-button">
-                <BiUser  size={'24'}/>
+                <UserOutlined style={{fontSize: 24}}/>
                 <span> Perfil</span>
               </div>
             </Link>
